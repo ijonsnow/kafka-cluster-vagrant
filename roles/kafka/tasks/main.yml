@@ -1,0 +1,36 @@
+---
+- name: Get Kafka {{kafka.version}}
+  get_url: url={{kafka.url}} dest={{kafka.tgz}} timeout=60
+
+- name: Create the remote directory for Kafka
+  become: true
+  file: path={{kafka.untar_to}} state=directory mode=0755
+
+- name: Unarchive Kafka
+  become: true
+  unarchive: copy=no src={{kafka.tgz}} dest={{kafka.untar_to}}
+
+- name: Symlink to the Kafka version
+  become: true
+  file: path={{kafka.symlink}} src={{kafka.symlink_to}} state=link
+
+- name: copy file
+  become: true  
+  copy: src=../files/broker-id.sh dest=/tmp/broker-id.sh mode=777 
+
+- name: Add broker id
+  become: true   
+  shell: /tmp/broker-id.sh  
+  notify:
+    - start kafka
+
+- name: Copy monitoring
+  become: true   
+  copy: src=../files/check_port.pl dest=/tmp/check_port.pl mode=777  
+
+- name: Cluster setup
+  become: true   
+  copy: src=../files/kafka-cluster.sh dest=/tmp/kafka-cluster.sh mode=777  
+
+
+  
