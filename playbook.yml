@@ -1,0 +1,7 @@
+---
+- hosts: kafka.*
+  become: true
+  become_method: sudo
+  roles:
+    - zookeeper
+    - kafka
