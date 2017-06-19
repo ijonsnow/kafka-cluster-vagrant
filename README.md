@@ -11,11 +11,13 @@ prerequisites
 3. Open a terminal
 4.````vagrant up````
 
-You should now have a provisioned VM running ZooKeeper and Kafka
 
 # Commands
 
-git clone 
-vagrant up
+1. git clone the project
+2. cd to project directory
+3. Run vagrant up
+
+
 
 
